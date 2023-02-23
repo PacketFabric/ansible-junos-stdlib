@@ -840,6 +840,9 @@ def main():
             commit=dict(required=False,
                         type='bool',
                         default=None),
+            commit_full=dict(required=False,
+                             type='bool',
+                             default=False),
             commit_empty_changes=dict(required=False,
                                       type='bool',
                                       default=False),
@@ -894,6 +897,7 @@ def main():
     filter = junos_module.params.get('filter')
     dest = junos_module.params.get('dest')
     commit = junos_module.params.get('commit')
+    commit_full = junos_module.params.get('commit_full')
     commit_empty_changes = junos_module.params.get('commit_empty_changes')
     confirmed = junos_module.params.get('confirmed')
     comment = junos_module.params.get('comment')
@@ -1122,7 +1126,8 @@ def main():
                 time.sleep(check_commit_wait)
             junos_module.commit_configuration(ignore_warning=ignore_warning,
                                               comment=comment,
-                                              confirmed=confirmed)
+                                              confirmed=confirmed,
+                                              full=commit_full)
             results['msg'] += ', committed'
         else:
             junos_module.logger.debug("Skipping commit. Nothing changed.")

@@ -686,7 +686,7 @@ def main():
             junos_module.logger.debug("Install parameters are: %s",
                                        str(install_params))
             junos_module.add_sw()
-            ok = junos_module.sw.install(**install_params)
+            ok, msg_ret = junos_module.sw.install(**install_params)
             if ok is not True:
                 results['msg'] = 'Unable to install the software'
                 junos_module.fail_json(**results)
